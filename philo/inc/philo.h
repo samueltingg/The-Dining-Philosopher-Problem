@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/10/14 14:59:10 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/14 15:10:46 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <sys/time.h>
 
 #endif

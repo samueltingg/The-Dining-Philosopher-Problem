@@ -6,15 +6,16 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/15 11:08:43 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/15 16:47:44 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
 /*
-void	eat(void) {
-
+void	eat(size_t millisecond, t_philo *philo) {
+	// printf("")
+	ft_usleep(millisecond);
 }
 
 void	sleep(void) {
@@ -25,12 +26,17 @@ void	think(void) {
 
 }
 
-void	*run_routine(void *ptr) {
-
-
-
-}
 */
+
+void	*philo_routine(void *ptr) {
+	t_philo *philo;
+
+	philo = (t_philo *)ptr;
+	usleep(philo->time_to_eat * 1000); // * convert to micro
+	ft_usleep(philo->time_to_eat);
+	return (NULL);
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
 void	init_philo_struct(t_philo *philo, char **argv, int argc)
 {
 	memset(philo, 0, sizeof(t_philo));
@@ -40,15 +46,13 @@ void	init_philo_struct(t_philo *philo, char **argv, int argc)
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		philo->num_times_to_eat = ft_atoi(argv[5]);
-	// todo: else -> initilize to 0?
 }
 
-// Todo: parse arguments
 int	main(int argc, char **argv)
 {
 	t_philo	philo;
+	pthread_t	*thread;
 	// pthread_mutex_t mutex;
-	// pthread_t thread1;
 
 	// todo: Argv Error checking
 	if (argc < 5)
@@ -58,6 +62,21 @@ int	main(int argc, char **argv)
 	}
 	init_philo_struct(&philo, argv, argc);
 
+	thread = (pthread_t *)malloc((philo.num_of_philos + 1) * sizeof(pthread_t));
+	if (!thread) {
+		printf("Error: ft_calloc");
+		return (1);
+	}	
+
 	// pthread_mutex_init(&mutex, NULL);
-	// pthread_create(&thread1, NULL, run_routine, )
+
+	int	i;
+	i = -1;
+	while (++i < philo.num_of_philos)
+		pthread_create(&thread[i], NULL, philo_routine, (void *)&philo);
+	i = -1; 
+	while (++i < philo.num_of_philos)
+		pthread_join(thread[i], NULL);
+
+	// pthread_mutex_destroy(&mutex);
 }

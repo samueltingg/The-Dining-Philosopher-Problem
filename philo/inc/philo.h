@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/10/15 11:08:58 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/15 16:32:21 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@ typedef struct s_philo
 }			t_philo;
 
 int			ft_atoi(const char *str);
+size_t		get_current_time(void);
+int			ft_usleep(size_t milliseconds);
 
 #endif

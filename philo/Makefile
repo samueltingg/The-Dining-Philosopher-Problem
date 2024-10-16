@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror $(INCLUDES) #-fsanitize=address -g #-std=c99
+CFLAGS = -Wall -Wextra -Werror $(INCLUDES) #-fsanitize=thread -g #-fsanitize=address -g #-std=c99
 INCLUDES = -Iinc
 
 # Output executable
@@ -17,7 +17,8 @@ SRCDIR = src/
 
 SRCS_FIL = \
 			main.c \
-			utils.c
+			utils.c \
+			libft.c 
 
 SRCS = $(addprefix $(SRCDIR), $(SRCS_FIL))
 

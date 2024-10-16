@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/16 10:35:03 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/16 12:29:03 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*philo_routine(void *ptr) {
 	t_philo *philo;
 
 	philo = (t_philo *)ptr;
-	usleep(philo->time_to_eat * 1000); // * convert to micro
+	printf("sleeping...\n");
 	ft_usleep(philo->time_to_eat);
 	return (NULL);
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
@@ -64,7 +64,6 @@ int	main(int argc, char **argv)
 	}
 	num_of_philos = ft_atoi(argv[1]);
 
-	// todo: malloc array of t_philo
 	philo_arr = ft_calloc(num_of_philos + 1, sizeof(t_philo));
 	if (!philo_arr) 
 	{
@@ -72,7 +71,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	
-	// todo: init elemnts in each t_philo struct
+	// todo: init elements in each t_philo struct
 	i = -1;
 	while (++i < num_of_philos)
 		init_philo_struct(&philo_arr[i], i, argv, argc);
@@ -81,12 +80,12 @@ int	main(int argc, char **argv)
 
 
 
-	// i = -1;
-	// while (++i < philo.num_of_philos)
-	// 	pthread_create(&thread[i], NULL, philo_routine, (void *)&philo);
-	// i = -1; 
-	// while (++i < philo.num_of_philos)
-	// 	pthread_join(thread[i], NULL);
+	i = -1;
+	while (++i < num_of_philos)
+		pthread_create(&(philo_arr[i].thread), NULL, philo_routine, (void *)&philo_arr[i]);
+	i = -1; 
+	while (++i < num_of_philos)
+		pthread_join(philo_arr[i].thread, NULL);
 
 	// pthread_mutex_destroy(&mutex);
 

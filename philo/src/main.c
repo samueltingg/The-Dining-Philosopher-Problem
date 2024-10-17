@@ -6,34 +6,29 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/16 12:29:03 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/17 17:00:11 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-/*
-void	eat(size_t millisecond, t_philo *philo) {
-	// printf("")
-	ft_usleep(millisecond);
-}
-
-void	sleep(void) {
-
-}
-
-void	think(void) {
-
-}
-
-*/
-
 void	*philo_routine(void *ptr) {
 	t_philo *philo;
 
 	philo = (t_philo *)ptr;
-	printf("sleeping...\n");
-	ft_usleep(philo->time_to_eat);
+	if (philo->id % 2 == 0) // even num delay
+		ft_usleep(50);
+	while (1) // todo: died condition
+	{
+		// todo: take left fork 
+		// todo: take right fork
+
+		printf("[timestamp] %i is eating\n", philo->id);
+		ft_usleep(philo->time_to_eat);
+		printf("[timestamp] %i is sleeping\n", philo->id);
+		ft_usleep(philo->time_to_sleep);
+		printf("[timestamp] %i is thinking\n", philo->id);
+	}
 	return (NULL);
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
@@ -54,7 +49,7 @@ int	main(int argc, char **argv)
 	t_philo	*philo_arr;
 	int	i;
 	int num_of_philos;
-	// pthread_mutex_t mutex;
+	pthread_mutex_t print_mutex;
 
 	// todo: Argv Error checking
 	if (argc < 5)
@@ -76,10 +71,8 @@ int	main(int argc, char **argv)
 	while (++i < num_of_philos)
 		init_philo_struct(&philo_arr[i], i, argv, argc);
 
-	// pthread_mutex_init(&mutex, NULL);
-
-
-
+	pthread_mutex_init(&print_mutex, NULL);
+	
 	i = -1;
 	while (++i < num_of_philos)
 		pthread_create(&(philo_arr[i].thread), NULL, philo_routine, (void *)&philo_arr[i]);

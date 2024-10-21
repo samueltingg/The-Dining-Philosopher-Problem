@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/17 18:35:39 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/21 10:53:22 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,37 @@ int	check_arg(int argc)
 	return (0);
 }
 
-// void init_philos()
-// {
+void	init_philo_struct(t_philo *philo, int index, char **argv, int argc)
+{
+	memset(philo, 0, sizeof(t_philo));
+	philo->id = index + 1;
+	philo->num_of_philos = ft_atoi(argv[1]);
+	philo->time_to_die = ft_atoi(argv[2]);
+	philo->time_to_eat = ft_atoi(argv[3]);
+	philo->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		philo->num_times_to_eat = ft_atoi(argv[5]);
+	else 
+		philo->num_times_to_eat = -1; // ? necessary?
 
-// }
+}
+
+// malloc philos array + init individual philo struct content
+void init_philos(t_program *program, char **argv, int argc)
+{
+	int i;
+	program->philo_count = ft_atoi(argv[1]);
+	program->philos = ft_calloc(program->philo_count + 1, sizeof(t_philo));
+	if (!program->philos)
+	{
+		printf("Error: ft_calloc");
+		return (1);
+	}
+	// todo: init elements in each t_philo struct
+	i = -1;
+	while (++i < program->philo_count)
+		init_philo_struct(&program->philos[i], i, argv, argc);
+}
 
 void	*philo_routine(void *ptr)
 {
@@ -48,37 +75,6 @@ void	*philo_routine(void *ptr)
 	return (NULL);
 }
 
-void	init_philo_struct(t_philo *philo, int index, char **argv, int argc)
-{
-	memset(philo, 0, sizeof(t_philo));
-	philo->id = index + 1;
-	philo->num_of_philos = ft_atoi(argv[1]);
-	philo->time_to_die = ft_atoi(argv[2]);
-	philo->time_to_eat = ft_atoi(argv[3]);
-	philo->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		philo->num_times_to_eat = ft_atoi(argv[5]);
-	else 
-		philo->num_times_to_eat = -1; // ? necessary?
-
-}
-
-void init_philos(t_program *program, char **argv, int argc)
-{
-	int i;
-	program->philo_count = ft_atoi(argv[1]);
-	program->philos = ft_calloc(program->philo_count + 1, sizeof(t_philo));
-	if (!program->philos)
-	{
-		printf("Error: ft_calloc");
-		return (1);
-	}
-	// todo: init elements in each t_philo struct
-	i = -1;
-	while (++i < program->philo_count)
-		init_philo_struct(&program->philos[i], i, argv, argc);
-}
-
 void create_threads(t_program *program)
 {
 	int i;
@@ -88,6 +84,16 @@ void create_threads(t_program *program)
 		pthread_create(&(program->philos[i].thread), NULL, philo_routine,
 			(void *)&program->philos[i]);
 }
+
+void join_threads(t_program *program)
+{
+	int	i;
+
+	i = -1;
+	while (++i < program->philo_count) 
+		pthread_join(program->philos[i].thread, NULL);
+}
+
 
 // NEW
 int	main(int argc, char **argv)
@@ -103,12 +109,7 @@ int	main(int argc, char **argv)
 	// todo: init mutex/forks	
 
 	create_threads(&program);	
-	
-	// ! stopped here
-	// todo: create	join function? 
-	i = -1;
-	while (++i < program.philo_count) 
-		pthread_join(philos[i].thread, NULL);
+	join_threads(&program);
 
 	// pthread_mutex_destroy(&mutex);
 

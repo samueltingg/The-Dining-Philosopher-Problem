@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/21 14:28:54 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/21 15:07:48 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,17 @@ int	check_arg(int argc)
 // calloc array of forks(mutex)
 int	init_forks(t_program *program)
 {
+	int i;
+
 	program->forks = ft_calloc(program->philo_count + 1, sizeof(pthread_mutex_t));
 	if (!program->forks)
 	{
 		printf("Error: ft_calloc");
 		return (1);
 	}
+	i = -1;
+	while (++i < program->philo_count)
+		pthread_mutex_init(&program->forks[i], NULL);
 	return (0);
 }
 
@@ -87,8 +92,13 @@ void	*philo_routine(void *ptr)
 	{
 		// todo: take left fork
 		// todo: take right fork
+		pthread_mutex_lock(&philo->l_fork);
+		pthread_mutex_lock(&philo->r_fork);
 		printf("[timestamp] %i is eating\n", philo->id);
 		ft_usleep(philo->time_to_eat);
+		pthread_mutex_unlock(&philo->l_fork);
+		pthread_mutex_unlock(&philo->r_fork); // ! STOPPED HERE
+	
 		printf("[timestamp] %i is sleeping\n", philo->id);
 		ft_usleep(philo->time_to_sleep);
 		printf("[timestamp] %i is thinking\n", philo->id);
@@ -115,26 +125,35 @@ void join_threads(t_program *program)
 		pthread_join(program->philos[i].thread, NULL);
 }
 
+void destroy_forks(t_program *program)
+{
+	int i;
+
+	i = -1;
+	while (++i < program->philo_count)
+		pthread_mutex_destroy(&program->forks[i]);
+}
 
 // NEW
 int	main(int argc, char **argv)
 {
-	t_program		program;
+	t_program	program;
 
 	if (check_arg(argc))
 		return (1);
 
+	
 	// todo: init forks(mutex)
 	init_forks(&program);
 
 	if (init_philos(&program, argv, argc))
 		return (1);
-
+	
 	create_threads(&program);	
 	join_threads(&program);
 
-	// pthread_mutex_destroy(&mutex);
-
+	// todo: destroy_forks
+	
 	// TODO: FREE
 	free(program.philos);
 }

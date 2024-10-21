@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/10/17 18:32:18 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/21 11:37:21 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,16 @@ typedef struct s_philo
 	size_t			time_to_sleep;
 	int				num_times_to_eat;
 
-	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	l_fork;
+	pthread_mutex_t	r_fork;
 }					t_philo;
 
 typedef struct s_program
 {
 	t_philo			*philos;
+	pthread_mutex_t *forks;
 	int philo_count;
-	pthread_mutex_t	write_lock;
+	// pthread_mutex_t	write_lock;
 }					t_program;
 
 int					ft_atoi(const char *str);

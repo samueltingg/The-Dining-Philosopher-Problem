@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/21 15:07:48 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/22 11:28:14 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,61 +23,65 @@ int	check_arg(int argc)
 	return (0);
 }
 
-// calloc array of forks(mutex)
-int	init_forks(t_program *program)
+void init_args(t_program *program, char **argv, int argc)
 {
-	int i;
-
-	program->forks = ft_calloc(program->philo_count + 1, sizeof(pthread_mutex_t));
-	if (!program->forks)
-	{
-		printf("Error: ft_calloc");
-		return (1);
-	}
-	i = -1;
-	while (++i < program->philo_count)
-		pthread_mutex_init(&program->forks[i], NULL);
-	return (0);
+	program->args.philo_count = ft_atoi(argv[1]);
+	program->args.time_to_die = ft_atoi(argv[2]);
+	program->args.time_to_eat = ft_atoi(argv[3]);
+	program->args.time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		program->args.num_times_to_eat = ft_atoi(argv[5]);
+	else 
+		program->args.num_times_to_eat = -1; // ? necessary?	
 }
+// calloc array of forks(mutex)
+// int	init_forks(t_program *program)
+// {
+// 	int i;
 
-void	init_philo_struct(t_program	*program, int index, char **argv, int argc)
+// 	program->forks = ft_calloc(program->philo_count + 1, sizeof(pthread_mutex_t));
+// 	if (!program->forks)
+// 	{
+// 		printf("Error: ft_calloc");
+// 		return (1);
+// 	}
+// 	i = -1;
+// 	while (++i < program->philo_count)
+// 		pthread_mutex_init(&program->forks[i], NULL);
+// 	return (0);
+// }
+
+void	init_philo_struct(t_program	*program, int index)
 {
 	// memset(program->philos, 0, sizeof(t_philo));
 	t_philo *philo;
 
 	philo = &program->philos[index];
 	philo->id = index + 1;
-	philo->num_of_philos = ft_atoi(argv[1]);
-	philo->time_to_die = ft_atoi(argv[2]);
-	philo->time_to_eat = ft_atoi(argv[3]);
-	philo->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		philo->num_times_to_eat = ft_atoi(argv[5]);
-	else 
-		philo->num_times_to_eat = -1; // ? necessary?
+	philo->args = program->args;
 	
 	// todo: (REVIEW)init left_fork & right fork 
-	philo->l_fork = program->forks[index]; 
-	if (index + 1 == program->philo_count) // if last element
-		philo->r_fork = program->forks[0];
-	philo->r_fork = program->forks[index + 1];
+	// philo->l_fork = program->forks[index]; 
+	// if (index + 1 == program->philo_count) // if last element
+	// 	philo->r_fork = program->forks[0];
+	// philo->r_fork = program->forks[index + 1];
 }
 
 // malloc philos array + init individual philo struct content
-int init_philos(t_program *program, char **argv, int argc)
+int init_philos(t_program *program)
 {
 	int i;
 
-	program->philo_count = ft_atoi(argv[1]);
-	program->philos = ft_calloc(program->philo_count + 1, sizeof(t_philo));
+	program->philo_count = program->args.philo_count; // ! needed?
+	program->philos = ft_calloc(program->philo_count, sizeof(t_philo));
 	if (!program->philos)
 	{
 		printf("Error: ft_calloc");
 		return (1);
 	}
 	i = -1;
-	while (++i < program->philo_count)
-		init_philo_struct(program, i, argv, argc);
+	while (++i < program->args.philo_count)
+		init_philo_struct(program, i);
 	return (0);
 }
 
@@ -92,15 +96,15 @@ void	*philo_routine(void *ptr)
 	{
 		// todo: take left fork
 		// todo: take right fork
-		pthread_mutex_lock(&philo->l_fork);
-		pthread_mutex_lock(&philo->r_fork);
+		// pthread_mutex_lock(&philo->l_fork);
+		// pthread_mutex_lock(&philo->r_fork);
 		printf("[timestamp] %i is eating\n", philo->id);
-		ft_usleep(philo->time_to_eat);
-		pthread_mutex_unlock(&philo->l_fork);
-		pthread_mutex_unlock(&philo->r_fork); // ! STOPPED HERE
+		ft_usleep(philo->args.time_to_eat);
+		// pthread_mutex_unlock(&philo->l_fork);
+		// pthread_mutex_unlock(&philo->r_fork); // ! STOPPED HERE
 	
 		printf("[timestamp] %i is sleeping\n", philo->id);
-		ft_usleep(philo->time_to_sleep);
+		ft_usleep(philo->args.time_to_sleep);
 		printf("[timestamp] %i is thinking\n", philo->id);
 	}
 	return (NULL);
@@ -124,7 +128,7 @@ void join_threads(t_program *program)
 	while (++i < program->philo_count) 
 		pthread_join(program->philos[i].thread, NULL);
 }
-
+/*
 void destroy_forks(t_program *program)
 {
 	int i;
@@ -133,6 +137,7 @@ void destroy_forks(t_program *program)
 	while (++i < program->philo_count)
 		pthread_mutex_destroy(&program->forks[i]);
 }
+*/
 
 // NEW
 int	main(int argc, char **argv)
@@ -142,21 +147,28 @@ int	main(int argc, char **argv)
 	if (check_arg(argc))
 		return (1);
 
+	// todo: init_args
+	init_args(&program, argv, argc);
 	
-	// todo: init forks(mutex)
-	init_forks(&program);
-
-	if (init_philos(&program, argv, argc))
+	// if (init_forks(&program))
+	// 	return (1);
+	if (init_philos(&program))
 		return (1);
-	
+
 	create_threads(&program);	
 	join_threads(&program);
 
-	// todo: destroy_forks
+	// destroy_forks(&program);
 	
-	// TODO: FREE
+	// // TODO: FREE
 	free(program.philos);
+	// free(program.forks);
 }
+
+
+
+
+
 
 // int	main(int argc, char **argv)
 // {

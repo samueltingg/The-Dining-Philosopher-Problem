@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/10/21 11:37:21 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/22 11:28:36 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,30 @@
 
 # define INVALID_ARG 1
 
-typedef struct s_philo
+typedef struct s_args
 {
-	pthread_t		thread;
-	int				id;
-
-	int				num_of_philos;
+	int				philo_count;
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
 	int				num_times_to_eat;
 
-	pthread_mutex_t	l_fork;
+}			t_args;
+
+typedef struct s_philo
+{
+	pthread_t		thread;
+	int				id;
+	t_args			args;
+
+	pthread_mutex_t	l_fork; // ! ptr or no?
 	pthread_mutex_t	r_fork;
 }					t_philo;
 
+
 typedef struct s_program
 {
+	t_args			args;
 	t_philo			*philos;
 	pthread_mutex_t *forks;
 	int philo_count;

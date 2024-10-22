@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/10/22 11:28:36 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/22 15:20:13 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,15 @@ typedef struct s_args
 
 }			t_args;
 
+
+typedef struct s_program t_program;
+
 typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	t_args			args;
+	// t_args			args;
+	t_program		*program;
 
 	pthread_mutex_t	l_fork; // ! ptr or no?
 	pthread_mutex_t	r_fork;
@@ -49,6 +53,7 @@ typedef struct s_program
 	t_args			args;
 	t_philo			*philos;
 	pthread_mutex_t *forks;
+	int start_time;
 	int philo_count;
 	// pthread_mutex_t	write_lock;
 }					t_program;
@@ -57,5 +62,6 @@ int					ft_atoi(const char *str);
 size_t				get_current_time(void);
 int					ft_usleep(size_t milliseconds);
 void				*ft_calloc(size_t num_elements, size_t element_size);
+void	*philo_routine(void *ptr);
 
 #endif

@@ -18,7 +18,8 @@ SRCDIR = src/
 SRCS_FIL = \
 			main.c \
 			utils.c \
-			libft.c 
+			libft.c \
+			routine.c
 
 SRCS = $(addprefix $(SRCDIR), $(SRCS_FIL))
 

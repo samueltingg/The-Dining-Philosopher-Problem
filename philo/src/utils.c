@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:45:17 by sting             #+#    #+#             */
-/*   Updated: 2024/10/22 10:03:09 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/22 15:16:40 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,13 @@ int	ft_usleep(size_t milliseconds)
 	while ((get_current_time() - start) < milliseconds)
 		usleep(500);
 	return (0);
+}
+
+void print_message(char *message, t_program *program, int philo_id)
+{
+	int timestamp;
+
+	timestamp = get_current_time() - program->start_time;
+	printf("%i %i %s\n", timestamp, philo_id, message);
+
 }

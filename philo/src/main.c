@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/22 11:28:14 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/22 15:29:46 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,21 @@ void init_args(t_program *program, char **argv, int argc)
 		program->args.num_times_to_eat = -1; // ? necessary?	
 }
 // calloc array of forks(mutex)
-// int	init_forks(t_program *program)
-// {
-// 	int i;
+int	init_forks(t_program *program)
+{
+	int i;
 
-// 	program->forks = ft_calloc(program->philo_count + 1, sizeof(pthread_mutex_t));
-// 	if (!program->forks)
-// 	{
-// 		printf("Error: ft_calloc");
-// 		return (1);
-// 	}
-// 	i = -1;
-// 	while (++i < program->philo_count)
-// 		pthread_mutex_init(&program->forks[i], NULL);
-// 	return (0);
-// }
+	program->forks = ft_calloc(program->philo_count + 1, sizeof(pthread_mutex_t));
+	if (!program->forks)
+	{
+		printf("Error: ft_calloc");
+		return (1);
+	}
+	i = -1;
+	while (++i < program->philo_count)
+		pthread_mutex_init(&program->forks[i], NULL);
+	return (0);
+}
 
 void	init_philo_struct(t_program	*program, int index)
 {
@@ -58,13 +58,14 @@ void	init_philo_struct(t_program	*program, int index)
 
 	philo = &program->philos[index];
 	philo->id = index + 1;
-	philo->args = program->args;
+	// philo->args = program->args;
+	philo->program = program;
 	
 	// todo: (REVIEW)init left_fork & right fork 
-	// philo->l_fork = program->forks[index]; 
-	// if (index + 1 == program->philo_count) // if last element
-	// 	philo->r_fork = program->forks[0];
-	// philo->r_fork = program->forks[index + 1];
+	philo->l_fork = program->forks[index]; 
+	if (index + 1 == program->philo_count) // if last element
+		philo->r_fork = program->forks[0];
+	philo->r_fork = program->forks[index + 1];
 }
 
 // malloc philos array + init individual philo struct content
@@ -85,30 +86,6 @@ int init_philos(t_program *program)
 	return (0);
 }
 
-void	*philo_routine(void *ptr)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)ptr;
-	if (philo->id % 2 == 0) // even num delay
-		ft_usleep(50);
-	while (1) // todo: died condition
-	{
-		// todo: take left fork
-		// todo: take right fork
-		// pthread_mutex_lock(&philo->l_fork);
-		// pthread_mutex_lock(&philo->r_fork);
-		printf("[timestamp] %i is eating\n", philo->id);
-		ft_usleep(philo->args.time_to_eat);
-		// pthread_mutex_unlock(&philo->l_fork);
-		// pthread_mutex_unlock(&philo->r_fork); // ! STOPPED HERE
-	
-		printf("[timestamp] %i is sleeping\n", philo->id);
-		ft_usleep(philo->args.time_to_sleep);
-		printf("[timestamp] %i is thinking\n", philo->id);
-	}
-	return (NULL);
-}
 
 void create_threads(t_program *program)
 {
@@ -128,7 +105,7 @@ void join_threads(t_program *program)
 	while (++i < program->philo_count) 
 		pthread_join(program->philos[i].thread, NULL);
 }
-/*
+
 void destroy_forks(t_program *program)
 {
 	int i;
@@ -137,7 +114,6 @@ void destroy_forks(t_program *program)
 	while (++i < program->philo_count)
 		pthread_mutex_destroy(&program->forks[i]);
 }
-*/
 
 // NEW
 int	main(int argc, char **argv)
@@ -150,22 +126,20 @@ int	main(int argc, char **argv)
 	// todo: init_args
 	init_args(&program, argv, argc);
 	
-	// if (init_forks(&program))
-	// 	return (1);
+	if (init_forks(&program))
+		return (1);
 	if (init_philos(&program))
 		return (1);
 
 	create_threads(&program);	
 	join_threads(&program);
 
-	// destroy_forks(&program);
-	
-	// // TODO: FREE
+	destroy_forks(&program);
+
+	// TODO: FREE
 	free(program.philos);
-	// free(program.forks);
+	free(program.forks);
 }
-
-
 
 
 

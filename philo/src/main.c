@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/23 14:08:58 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/23 16:04:00 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void create_threads(t_program *program)
 	while (++i < program->args.philo_count)
 		pthread_create(&(program->philos[i].thread), NULL, philo_routine,
 			(void *)&program->philos[i]);
-	
 }
 
 void join_threads(t_program *program)

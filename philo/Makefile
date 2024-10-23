@@ -19,7 +19,8 @@ SRCS_FIL = \
 			main.c \
 			utils.c \
 			libft.c \
-			routine.c
+			routine.c \
+			init.c
 
 SRCS = $(addprefix $(SRCDIR), $(SRCS_FIL))
 

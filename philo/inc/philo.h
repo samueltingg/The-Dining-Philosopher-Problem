@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/10/23 13:59:23 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/24 17:27:40 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_program
 {
 	t_args			args;
 	t_philo			*philos;
+	pthread_t		monitor_thread;
 	pthread_mutex_t *forks;
 	pthread_mutex_t	print_lock;
 	int				start_time;
@@ -68,6 +69,9 @@ int 				init_philos(t_program *program);
 // philo routine
 void				*philo_routine(void *ptr);
 
+// monitor
+void *monitor_philos(void *ptr);
+
 // utils
 size_t				get_current_time(void);
 int					ft_usleep(size_t milliseconds);
@@ -75,5 +79,8 @@ int					ft_usleep(size_t milliseconds);
 // libft
 int					ft_atoi(const char *str);
 void				*ft_calloc(size_t num_elements, size_t element_size);
+
+// ! tmp
+void print_current_time_millis_micro(void);
 
 #endif

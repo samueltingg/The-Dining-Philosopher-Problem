@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:45:17 by sting             #+#    #+#             */
-/*   Updated: 2024/10/23 10:06:48 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/24 16:40:41 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,3 +32,15 @@ int	ft_usleep(size_t milliseconds)
 	return (0);
 }
 
+// ! TMP
+void print_current_time_millis_micro() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+
+    // Calculate milliseconds and microseconds
+    long milliseconds = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+    long microseconds = tv.tv_usec % 1000;
+
+    // Print the output directly
+    printf("Milliseconds: %ld, Microseconds: %ld\n", milliseconds, microseconds);
+}

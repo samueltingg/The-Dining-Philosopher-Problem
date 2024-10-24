@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:17:57 by sting             #+#    #+#             */
-/*   Updated: 2024/10/23 14:01:08 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/24 16:45:20 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void eating(t_philo *philo)
 	pthread_mutex_lock(&philo->l_fork);
 	// printf("current time: %zu\n", get_current_time());
 	print_message(philo, "has taken a fork");
+	if (philo->program->args.philo_count == 1)
+	{
+		pthread_mutex_unlock(&philo->l_fork);
+		return ;
+	}
 	pthread_mutex_lock(&philo->r_fork);
 	print_message(philo, "has taken a fork");
 	print_message(philo, "is eating");
@@ -51,6 +56,8 @@ void	*philo_routine(void *ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)ptr;
+
+	printf("current_time[%i]: %zu\n", philo->id, get_current_time());
 
 	if (philo->id % 2 == 0) // even num delay
 		ft_usleep(50); //! why 50?

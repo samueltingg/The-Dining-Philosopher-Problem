@@ -6,21 +6,11 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:17:57 by sting             #+#    #+#             */
-/*   Updated: 2024/10/24 16:45:20 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:26:16 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-void print_message(t_philo *philo, char *message)
-{
-	int timestamp;
-
-	pthread_mutex_lock(&philo->program->print_lock);
-	timestamp = get_current_time() - philo->program->start_time;
-	printf("%i %i %s\n", timestamp, philo->id, message);
-	pthread_mutex_unlock(&philo->program->print_lock);
-}
 
 void eating(t_philo *philo)
 {
@@ -57,15 +47,16 @@ void	*philo_routine(void *ptr)
 
 	philo = (t_philo *)ptr;
 
-	printf("current_time[%i]: %zu\n", philo->id, get_current_time());
+	// printf("current_time[%i]: %zu\n", philo->id, get_current_time());
 
 	if (philo->id % 2 == 0) // even num delay
 		ft_usleep(50); //! why 50?
 
 	// philo->start_time = get_current_time(); // ! storing start_time - method #2
 	// printf("start_time  : %zu\n", philo->start_time); // ! wrong -> storing start_time when philo is created
+
 	
-	while (1) // todo: died condition
+	while (philo->program->do_flag == YES) // todo: died condition
 	{
 		eating(philo);
 		sleeping(philo);

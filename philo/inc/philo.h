@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/10/24 17:27:40 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:26:00 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <unistd.h>
 
 # define INVALID_ARG 1
+# define YES 1
+# define NO 0
 
 typedef struct s_args
 {
@@ -46,6 +48,8 @@ typedef struct s_philo
 	pthread_mutex_t	l_fork; // ! ptr or no?
 	pthread_mutex_t	r_fork;
 	size_t 			start_time;
+	size_t			last_meal;
+	int				eat_flag;
 }					t_philo;
 
 
@@ -57,6 +61,7 @@ typedef struct s_program
 	pthread_mutex_t *forks;
 	pthread_mutex_t	print_lock;
 	int				start_time;
+	int				do_flag; // do_routine or don't
 }					t_program;
 
 
@@ -75,6 +80,7 @@ void *monitor_philos(void *ptr);
 // utils
 size_t				get_current_time(void);
 int					ft_usleep(size_t milliseconds);
+void print_message(t_philo *philo, char *message);
 
 // libft
 int					ft_atoi(const char *str);

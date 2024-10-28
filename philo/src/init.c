@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:23:12 by sting             #+#    #+#             */
-/*   Updated: 2024/10/24 16:18:03 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:18:49 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	init_philo_struct(t_program	*program, int index)
 		philo->r_fork = program->forks[0];
 	else
 		philo->r_fork = program->forks[index + 1];
+	philo->eat_flag = NO;
+	
 }
 
 // malloc philos array + init individual philo struct content

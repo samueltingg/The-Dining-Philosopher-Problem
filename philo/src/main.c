@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/24 17:29:09 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:00:32 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void create_threads(t_program *program)
 	int i;
 
 	program->start_time = get_current_time(); // ! storing start_time - method #1
+	program->do_flag = YES;
 	i = -1;
 	while (++i < program->args.philo_count)
 		pthread_create(&(program->philos[i].thread), NULL, philo_routine,

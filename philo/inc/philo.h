@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/10/28 15:26:00 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:40:02 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,17 @@ typedef struct s_program
 	pthread_t		monitor_thread;
 	pthread_mutex_t *forks;
 	pthread_mutex_t	print_lock;
+	pthread_mutex_t do_flag_mutex;
+	
 	int				start_time;
 	int				do_flag; // do_routine or don't
+
 }					t_program;
 
 
 // init
 void 				init_args(t_program *program, char **argv, int argc);
-int					init_forks(t_program *program);
+int					init_mutexes(t_program *program);
 void				init_philo_struct(t_program	*program, int index);
 int 				init_philos(t_program *program);
 

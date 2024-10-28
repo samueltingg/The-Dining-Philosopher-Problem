@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/28 15:00:32 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:40:36 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
 
 	init_args(&program, argv, argc);
 	
-	if (init_forks(&program))
+	if (init_mutexes(&program))
 		return (1);
 	pthread_mutex_init(&program.print_lock, NULL);
 	if (init_philos(&program))
@@ -74,7 +74,10 @@ int	main(int argc, char **argv)
 	join_threads(&program);
 
 	destroy_forks(&program);
+
+	// TODO: create separate func for 'non-fork' mutexes
 	pthread_mutex_destroy(&program.print_lock);
+	pthread_mutex_destroy(&program.do_flag_mutex);
 
 	// TODO: FREE
 	free(program.philos);

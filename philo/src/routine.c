@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:17:57 by sting             #+#    #+#             */
-/*   Updated: 2024/10/28 15:26:16 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:43:57 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,25 @@ void	*philo_routine(void *ptr)
 	// printf("start_time  : %zu\n", philo->start_time); // ! wrong -> storing start_time when philo is created
 
 	
-	while (philo->program->do_flag == YES) // todo: died condition
-	{
-		eating(philo);
-		sleeping(philo);
-		thinking(philo);
-	}
+	// while (philo->program->do_flag == YES) // todo: died condition
+	// {
+	// 	eating(philo);
+	// 	sleeping(philo);
+	// 	thinking(philo);
+	// }
+    while (1) // Loop until do_flag is NO
+    {
+        pthread_mutex_lock(&philo->program->do_flag_mutex); // Lock the mutex
+        if (philo->program->do_flag == NO) // Check the do_flag
+        {
+            pthread_mutex_unlock(&philo->program->do_flag_mutex); // Unlock before breaking
+            break; // Exit the loop if do_flag is NO
+        }
+        pthread_mutex_unlock(&philo->program->do_flag_mutex); // Unlock the mutex
+
+        eating(philo);
+        sleeping(philo);
+        thinking(philo);
+    }
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:23:12 by sting             #+#    #+#             */
-/*   Updated: 2024/10/28 15:18:49 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:39:12 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ void init_args(t_program *program, char **argv, int argc)
 		program->args.num_times_to_eat = -1; // ? necessary?	
 }
 // calloc array of forks(mutex)
-int	init_forks(t_program *program)
+int	init_mutexes(t_program *program)
 {
 	int i;
 
+	// init fork mutexes
 	program->forks = ft_calloc(program->args.philo_count, sizeof(pthread_mutex_t));
 	if (!program->forks)
 	{
@@ -37,6 +38,11 @@ int	init_forks(t_program *program)
 	i = -1;
 	while (++i < program->args.philo_count)
 		pthread_mutex_init(&program->forks[i], NULL);
+
+	// init other mutexes
+	pthread_mutex_init(&program->do_flag_mutex, NULL);
+	pthread_mutex_init(&program->print_lock, NULL);
+
 	return (0);
 }
 

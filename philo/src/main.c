@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/28 15:40:36 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/29 10:04:21 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,17 @@ void join_threads(t_program *program)
 	pthread_join(program->monitor_thread, NULL);
 }
 
-void destroy_forks(t_program *program)
+void destroy_mutexes(t_program *program)
 {
 	int i;
 
 	i = -1;
 	while (++i < program->args.philo_count)
 		pthread_mutex_destroy(&program->forks[i]);
+		
+	pthread_mutex_destroy(&program->print_mutex);
+	pthread_mutex_destroy(&program->do_flag_mutex);
+	pthread_mutex_destroy(&program->eat_flag_mutex);
 }
 
 // NEW
@@ -64,21 +68,15 @@ int	main(int argc, char **argv)
 		return (1);
 
 	init_args(&program, argv, argc);
-	
 	if (init_mutexes(&program))
 		return (1);
-	pthread_mutex_init(&program.print_lock, NULL);
 	if (init_philos(&program))
 		return (1);
+		
 	create_threads(&program);	
 	join_threads(&program);
-
-	destroy_forks(&program);
-
-	// TODO: create separate func for 'non-fork' mutexes
-	pthread_mutex_destroy(&program.print_lock);
-	pthread_mutex_destroy(&program.do_flag_mutex);
-
+	
+	destroy_mutexes(&program);
 	// TODO: FREE
 	free(program.philos);
 	free(program.forks);

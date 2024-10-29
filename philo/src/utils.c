@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:45:17 by sting             #+#    #+#             */
-/*   Updated: 2024/10/28 15:25:51 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/29 11:16:31 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void print_message(t_philo *philo, char *message)
 {
 	int timestamp;
 
-	pthread_mutex_lock(&philo->program->print_lock);
+	pthread_mutex_lock(&philo->program->print_mutex);
 	timestamp = get_current_time() - philo->program->start_time;
 	printf("%i %i %s\n", timestamp, philo->id, message);
-	pthread_mutex_unlock(&philo->program->print_lock);
+	pthread_mutex_unlock(&philo->program->print_mutex);
 }

@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:23:12 by sting             #+#    #+#             */
-/*   Updated: 2024/10/28 15:39:12 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/29 10:50:00 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ int	init_mutexes(t_program *program)
 		pthread_mutex_init(&program->forks[i], NULL);
 
 	// init other mutexes
+	pthread_mutex_init(&program->print_mutex, NULL);
 	pthread_mutex_init(&program->do_flag_mutex, NULL);
-	pthread_mutex_init(&program->print_lock, NULL);
+	pthread_mutex_init(&program->eat_flag_mutex, NULL);
 
 	return (0);
 }
@@ -58,10 +59,11 @@ void	init_philo_struct(t_program	*program, int index)
 	// todo: (REVIEW)init left_fork & right fork 
 	philo->l_fork = program->forks[index]; 
 	if (index + 1 == program->args.philo_count) // if last element
-		philo->r_fork = program->forks[0];
+		philo->r_fork = program->forks[0]; 
 	else
 		philo->r_fork = program->forks[index + 1];
 	philo->eat_flag = NO;
+	philo->last_meal = get_current_time();
 	
 }
 
@@ -78,6 +80,8 @@ int init_philos(t_program *program)
 	}
 	i = -1;
 	while (++i < program->args.philo_count)
+	{
 		init_philo_struct(program, i);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/10/28 15:40:02 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/29 10:09:41 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ typedef struct s_program
 	t_philo			*philos;
 	pthread_t		monitor_thread;
 	pthread_mutex_t *forks;
-	pthread_mutex_t	print_lock;
+	pthread_mutex_t	print_mutex;
 	pthread_mutex_t do_flag_mutex;
+	pthread_mutex_t eat_flag_mutex;
 	
 	int				start_time;
 	int				do_flag; // do_routine or don't

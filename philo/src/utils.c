@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:45:17 by sting             #+#    #+#             */
-/*   Updated: 2024/10/29 11:16:31 by sting            ###   ########.fr       */
+/*   Updated: 2024/10/29 11:30:14 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,33 @@ int	ft_usleep(size_t milliseconds)
 }
 
 // ! TMP
-void print_current_time_millis_micro() {
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
+// void print_current_time_millis_micro() {
+//     struct timeval tv;
+//     gettimeofday(&tv, NULL);
 
-    // Calculate milliseconds and microseconds
-    long milliseconds = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-    long microseconds = tv.tv_usec % 1000;
+//     // Calculate milliseconds and microseconds
+//     long milliseconds = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+//     long microseconds = tv.tv_usec % 1000;
 
-    // Print the output directly
-    printf("Milliseconds: %ld, Microseconds: %ld\n", milliseconds, microseconds);
-}
+//     // Print the output directly
+//     printf("Milliseconds: %ld, Microseconds: %ld\n", milliseconds, microseconds);
+// }
 
 void print_message(t_philo *philo, char *message)
 {
 	int timestamp;
+	
+	pthread_mutex_lock(&philo->program->do_flag_mutex);
+	if (philo->program->do_flag == NO)
+	{
+		pthread_mutex_unlock(&philo->program->do_flag_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&philo->program->do_flag_mutex);
 
 	pthread_mutex_lock(&philo->program->print_mutex);
 	timestamp = get_current_time() - philo->program->start_time;
 	printf("%i %i %s\n", timestamp, philo->id, message);
-	pthread_mutex_unlock(&philo->program->print_mutex);
+	if (strcmp(message, "died") != 0)
+		pthread_mutex_unlock(&philo->program->print_mutex);
 }

@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/10/29 10:09:41 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/04 10:41:19 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+#include <stdbool.h>
 
 # define INVALID_ARG 1
 # define YES 1
@@ -62,7 +63,7 @@ typedef struct s_program
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t do_flag_mutex;
 	pthread_mutex_t eat_flag_mutex;
-	
+
 	int				start_time;
 	int				do_flag; // do_routine or don't
 

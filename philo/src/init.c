@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:23:12 by sting             #+#    #+#             */
-/*   Updated: 2024/10/29 10:50:00 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/04 15:26:41 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void init_args(t_program *program, char **argv, int argc)
 	program->args.time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		program->args.num_times_to_eat = ft_atoi(argv[5]);
-	else 
-		program->args.num_times_to_eat = -1; // ? necessary?	
+	else
+		program->args.num_times_to_eat = -1; // ? necessary?
 }
 // calloc array of forks(mutex)
 int	init_mutexes(t_program *program)
@@ -43,6 +43,7 @@ int	init_mutexes(t_program *program)
 	pthread_mutex_init(&program->print_mutex, NULL);
 	pthread_mutex_init(&program->do_flag_mutex, NULL);
 	pthread_mutex_init(&program->eat_flag_mutex, NULL);
+	pthread_mutex_init(&program->start_mutex, NULL);
 
 	return (0);
 }
@@ -55,16 +56,16 @@ void	init_philo_struct(t_program	*program, int index)
 	philo = &program->philos[index];
 	philo->id = index + 1;
 	philo->program = program;
-	
-	// todo: (REVIEW)init left_fork & right fork 
-	philo->l_fork = program->forks[index]; 
+
+	// todo: (REVIEW)init left_fork & right fork
+	philo->l_fork = &program->forks[index];
 	if (index + 1 == program->args.philo_count) // if last element
-		philo->r_fork = program->forks[0]; 
+		philo->r_fork = &program->forks[0];
 	else
-		philo->r_fork = program->forks[index + 1];
+		philo->r_fork = &program->forks[index + 1];
 	philo->eat_flag = NO;
 	philo->last_meal = get_current_time();
-	
+
 }
 
 // malloc philos array + init individual philo struct content

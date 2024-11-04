@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/10/29 10:04:21 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/04 15:39:20 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,16 @@ void create_threads(t_program *program)
 {
 	int i;
 
-	program->start_time = get_current_time(); // ! storing start_time - method #1
 	program->do_flag = YES;
+	// todo: add mutex lock to sync up all threads + add lock in each thread
+	pthread_mutex_lock(&program->start_mutex);
 	i = -1;
 	while (++i < program->args.philo_count)
 		pthread_create(&(program->philos[i].thread), NULL, philo_routine,
 			(void *)&program->philos[i]);
 	pthread_create(&program->monitor_thread, NULL, monitor_philos, (void *)program);
+	program->start_time = get_current_time(); // ! storing start_time - method #1
+	pthread_mutex_unlock(&program->start_mutex);
 }
 
 void join_threads(t_program *program)
@@ -41,7 +44,7 @@ void join_threads(t_program *program)
 	int	i;
 
 	i = -1;
-	while (++i < program->args.philo_count) 
+	while (++i < program->args.philo_count)
 		pthread_join(program->philos[i].thread, NULL);
 	pthread_join(program->monitor_thread, NULL);
 }
@@ -53,10 +56,11 @@ void destroy_mutexes(t_program *program)
 	i = -1;
 	while (++i < program->args.philo_count)
 		pthread_mutex_destroy(&program->forks[i]);
-		
+
 	pthread_mutex_destroy(&program->print_mutex);
 	pthread_mutex_destroy(&program->do_flag_mutex);
 	pthread_mutex_destroy(&program->eat_flag_mutex);
+	pthread_mutex_destroy(&program->start_mutex);
 }
 
 // NEW
@@ -72,10 +76,10 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_philos(&program))
 		return (1);
-		
-	create_threads(&program);	
+
+	create_threads(&program);
 	join_threads(&program);
-	
+
 	destroy_mutexes(&program);
 	// TODO: FREE
 	free(program.philos);

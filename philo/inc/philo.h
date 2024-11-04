@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/11/04 10:41:19 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/04 15:26:03 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct s_philo
 	// t_args			args;
 	t_program		*program;
 
-	pthread_mutex_t	l_fork; // ! ptr or no?
-	pthread_mutex_t	r_fork;
+	pthread_mutex_t	*l_fork; // ! ptr or no?
+	pthread_mutex_t	*r_fork;
 	size_t 			start_time;
 	size_t			last_meal;
 	int				eat_flag;
@@ -63,6 +63,7 @@ typedef struct s_program
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t do_flag_mutex;
 	pthread_mutex_t eat_flag_mutex;
+	pthread_mutex_t start_mutex;
 
 	int				start_time;
 	int				do_flag; // do_routine or don't

@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:17:57 by sting             #+#    #+#             */
-/*   Updated: 2024/10/29 11:13:31 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/04 10:18:23 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void eating(t_philo *philo)
 	}
 	pthread_mutex_lock(&philo->r_fork);
 	print_message(philo, "has taken a fork");
-	
+
 	pthread_mutex_lock(&philo->program->eat_flag_mutex);
 	philo->eat_flag = YES;
 	print_message(philo, "is eating");
@@ -57,21 +57,9 @@ void	*philo_routine(void *ptr)
 
 	philo = (t_philo *)ptr;
 
-	// printf("current_time[%i]: %zu\n", philo->id, get_current_time());
-
 	if (philo->id % 2 == 0) // even num delay
 		ft_usleep(50); //! why 50?
 
-	// philo->start_time = get_current_time(); // ! storing start_time - method #2
-	// printf("start_time  : %zu\n", philo->start_time); // ! wrong -> storing start_time when philo is created
-
-	
-	// while (philo->program->do_flag == YES) // todo: died condition
-	// {
-	// 	eating(philo);
-	// 	sleeping(philo);
-	// 	thinking(philo);
-	// }
     while (1) // Loop until do_flag is NO
     {
         pthread_mutex_lock(&philo->program->do_flag_mutex); // Lock the mutex
@@ -81,7 +69,6 @@ void	*philo_routine(void *ptr)
             break; // Exit the loop if do_flag is NO
         }
         pthread_mutex_unlock(&philo->program->do_flag_mutex); // Unlock the mutex
-
         eating(philo);
         sleeping(philo);
         thinking(philo);

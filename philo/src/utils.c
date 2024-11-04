@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:45:17 by sting             #+#    #+#             */
-/*   Updated: 2024/10/29 11:30:14 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/04 10:30:13 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_usleep(size_t milliseconds)
 void print_message(t_philo *philo, char *message)
 {
 	int timestamp;
-	
+
 	pthread_mutex_lock(&philo->program->do_flag_mutex);
 	if (philo->program->do_flag == NO)
 	{
@@ -60,6 +60,5 @@ void print_message(t_philo *philo, char *message)
 	pthread_mutex_lock(&philo->program->print_mutex);
 	timestamp = get_current_time() - philo->program->start_time;
 	printf("%i %i %s\n", timestamp, philo->id, message);
-	if (strcmp(message, "died") != 0)
-		pthread_mutex_unlock(&philo->program->print_mutex);
+	pthread_mutex_unlock(&philo->program->print_mutex);
 }

@@ -37,14 +37,19 @@ void handle_philo_death(t_program *program, int philo_index)
 void *monitor_philos(void *ptr)
 {
     t_program *program = (t_program *)ptr;
+	int	i;
 
     while (1)
     {
-        if (check_philo_death(program, 0))
-        {
-            handle_philo_death(program, 0);
-            break;
-        }
+		i = -1;
+		while (++i < program->args.philo_count)
+		{
+			if (check_philo_death(program, i))
+			{
+				handle_philo_death(program, i);
+				return (NULL);
+			}
+		}
     }
     return NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:17:57 by sting             #+#    #+#             */
-/*   Updated: 2024/11/04 10:18:23 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/04 11:38:39 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*philo_routine(void *ptr)
 	philo = (t_philo *)ptr;
 
 	if (philo->id % 2 == 0) // even num delay
-		ft_usleep(50); //! why 50?
+		ft_usleep(10); //! why 10?
 
     while (1) // Loop until do_flag is NO
     {

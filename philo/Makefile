@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror $(INCLUDES) -fsanitize=thread -g #-fsanitize=address -g #-std=c99
+CFLAGS = -Wall -Wextra -Werror $(INCLUDES) -g #-fsanitize=thread -g #-fsanitize=address -g #-std=c99
 INCLUDES = -Iinc
 
 # Output executable

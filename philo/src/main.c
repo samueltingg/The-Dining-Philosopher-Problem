@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/11/04 15:39:20 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/07 18:05:29 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void create_threads(t_program *program)
 
 	program->do_flag = YES;
 	// todo: add mutex lock to sync up all threads + add lock in each thread
+	program->start_time = get_current_time(); // ! storing start_time - method #1
 	pthread_mutex_lock(&program->start_mutex);
 	i = -1;
 	while (++i < program->args.philo_count)
 		pthread_create(&(program->philos[i].thread), NULL, philo_routine,
 			(void *)&program->philos[i]);
 	pthread_create(&program->monitor_thread, NULL, monitor_philos, (void *)program);
-	program->start_time = get_current_time(); // ! storing start_time - method #1
 	pthread_mutex_unlock(&program->start_mutex);
 }
 

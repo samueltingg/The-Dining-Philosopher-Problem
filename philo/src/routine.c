@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:17:57 by sting             #+#    #+#             */
-/*   Updated: 2024/11/07 16:27:12 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/25 16:19:12 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void eating(t_philo *philo)
 	print_message(philo, "has taken a fork");
 
 	print_message(philo, "is eating");
+	ft_usleep(philo->program->args.time_to_eat);
 	pthread_mutex_lock(&philo->program->eat_flag_mutex);
 	// philo->eat_flag = YES;
-	ft_usleep(philo->program->args.time_to_eat);
 	philo->last_meal = get_current_time(); // ! added
 	pthread_mutex_unlock(&philo->program->eat_flag_mutex);
 
@@ -60,7 +60,7 @@ void	*philo_routine(void *ptr)
 	pthread_mutex_unlock(&philo->program->start_mutex); // * start_lock
 
 	if (philo->id % 2 == 0) // even num delay
-		ft_usleep(5); //! why 10?
+		ft_usleep(50); //! why 10?
 
     while (1) // Loop until do_flag is NO
     {

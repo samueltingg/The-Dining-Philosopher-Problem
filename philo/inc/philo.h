@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/11/27 15:56:41 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/27 16:29:04 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_philo
 	pthread_mutex_t	*r_fork;
 	size_t 			start_time;
 	size_t			last_meal;
+	int				meal_count;
 	// int				eat_flag;
 }					t_philo;
 

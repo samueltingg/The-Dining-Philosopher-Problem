@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:23:12 by sting             #+#    #+#             */
-/*   Updated: 2024/11/27 15:56:52 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/27 16:29:24 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	init_philo_struct(t_program	*program, int index)
 		philo->r_fork = &program->forks[index + 1];
 	// philo->eat_flag = NO;
 	philo->last_meal = get_current_time();
+	philo->meal_count = 0;
 
 }
 

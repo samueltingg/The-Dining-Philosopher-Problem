@@ -33,6 +33,21 @@ void handle_philo_death(t_program *program, int philo_index)
     pthread_mutex_unlock(&program->do_flag_mutex);
 }
 
+bool is_all_eat(t_program *program)
+{
+    int i;
+    t_philo *philo = program->philos;
+
+    while (1)
+    {
+		i = -1;
+		while (++i < program->args.philo_count)
+            if (philo[i].meal_count != program->args.num_times_to_eat)
+                return (false);
+    }
+    return (true);
+}
+
 void *monitor_philos(void *ptr)
 {
     t_program *program = (t_program *)ptr;
@@ -49,6 +64,13 @@ void *monitor_philos(void *ptr)
 				return (NULL);
 			}
 		}
+        // TODO: is_all_eat();
+        if (is_all_eat(program))
+        {
+            pthread_mutex_lock(&program->do_flag_mutex);
+            program->do_flag = NO;
+            pthread_mutex_unlock(&program->do_flag_mutex);
+        }
     }
     return NULL;
 }

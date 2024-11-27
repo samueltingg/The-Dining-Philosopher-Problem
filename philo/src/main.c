@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/11/07 18:05:29 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/27 15:04:40 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void destroy_mutexes(t_program *program)
 
 	pthread_mutex_destroy(&program->print_mutex);
 	pthread_mutex_destroy(&program->do_flag_mutex);
-	pthread_mutex_destroy(&program->eat_flag_mutex);
+	pthread_mutex_destroy(&program->meal_mutex);
 	pthread_mutex_destroy(&program->start_mutex);
 }
 

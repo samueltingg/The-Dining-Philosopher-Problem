@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/11/04 15:26:03 by sting            ###   ########.fr       */
+/*   Updated: 2024/11/27 15:56:41 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_philo
 	pthread_mutex_t	*r_fork;
 	size_t 			start_time;
 	size_t			last_meal;
-	int				eat_flag;
+	// int				eat_flag;
 }					t_philo;
 
 
@@ -62,7 +62,7 @@ typedef struct s_program
 	pthread_mutex_t *forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t do_flag_mutex;
-	pthread_mutex_t eat_flag_mutex;
+	pthread_mutex_t meal_mutex;
 	pthread_mutex_t start_mutex;
 
 	int				start_time;

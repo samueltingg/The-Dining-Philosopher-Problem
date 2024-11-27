@@ -17,15 +17,11 @@ bool check_philo_death(t_program *program, int philo_index)
     bool is_dead = false;
 	size_t time_since_last_meal;
 
-    pthread_mutex_lock(&program->eat_flag_mutex);
+    pthread_mutex_lock(&program->meal_mutex);
 	time_since_last_meal = get_current_time() - program->philos[philo_index].last_meal;
-    // todo: eat flag uncessary?
-    if (/*program->philos[philo_index].eat_flag == NO && */
-        (time_since_last_meal >= program->args.time_to_die))
-    {
+    if (time_since_last_meal >= program->args.time_to_die)
         is_dead = true;
-    }
-    pthread_mutex_unlock(&program->eat_flag_mutex);
+    pthread_mutex_unlock(&program->meal_mutex);
     return (is_dead);
 }
 

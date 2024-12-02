@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:23:12 by sting             #+#    #+#             */
-/*   Updated: 2024/12/02 10:56:40 by sting            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:24:58 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	init_mutexes(t_program *program)
 {
 	int i;
 
-	// init fork mutexes
 	program->forks = ft_calloc(program->args.philo_count, sizeof(pthread_mutex_t));
 	if (!program->forks)
 	{
@@ -38,8 +37,6 @@ int	init_mutexes(t_program *program)
 	i = -1;
 	while (++i < program->args.philo_count)
 		pthread_mutex_init(&program->forks[i], NULL);
-
-	// init other mutexes
 	pthread_mutex_init(&program->print_mutex, NULL);
 	pthread_mutex_init(&program->do_flag_mutex, NULL);
 	pthread_mutex_init(&program->meal_mutex, NULL);
@@ -55,8 +52,6 @@ void	init_philo_struct(t_program	*program, int index)
 	philo = &program->philos[index];
 	philo->id = index + 1;
 	philo->program = program;
-
-	// todo: (REVIEW)init left_fork & right fork
 	philo->l_fork = &program->forks[index];
 	if (index + 1 == program->args.philo_count) // if last element
 		philo->r_fork = &program->forks[0];
@@ -64,7 +59,6 @@ void	init_philo_struct(t_program	*program, int index)
 		philo->r_fork = &program->forks[index + 1];
 	philo->last_meal = get_current_time();
 	philo->meal_count = 0;
-
 }
 
 // malloc philos array + init individual philo struct content

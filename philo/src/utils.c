@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:45:17 by sting             #+#    #+#             */
-/*   Updated: 2024/11/04 14:46:30 by sting            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:24:06 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,6 @@ int	ft_usleep(size_t milliseconds)
 	return (0);
 }
 
-// ! TMP
-// void print_current_time_millis_micro() {
-//     struct timeval tv;
-//     gettimeofday(&tv, NULL);
-
-//     // Calculate milliseconds and microseconds
-//     long milliseconds = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-//     long microseconds = tv.tv_usec % 1000;
-
-//     // Print the output directly
-//     printf("Milliseconds: %ld, Microseconds: %ld\n", milliseconds, microseconds);
-// }
-
 void print_message(t_philo *philo, char *message)
 {
 	int timestamp;
@@ -60,6 +47,5 @@ void print_message(t_philo *philo, char *message)
 	pthread_mutex_lock(&philo->program->print_mutex);
 	timestamp = get_current_time() - philo->program->start_time;
 	printf("%i %i %s\n", timestamp, philo->id, message);
-	// if (strcmp(message, "died") != 0)
 	pthread_mutex_unlock(&philo->program->print_mutex);
 }

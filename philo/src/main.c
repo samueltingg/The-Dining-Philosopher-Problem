@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/12/02 11:23:13 by sting            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:26:33 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void destroy_mutexes(t_program *program)
 	pthread_mutex_destroy(&program->start_mutex);
 }
 
-// NEW
 int	main(int argc, char **argv)
 {
 	t_program	program;

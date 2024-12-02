@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:09 by sting             #+#    #+#             */
-/*   Updated: 2024/12/02 10:56:51 by sting            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:16:46 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define INVALID_ARG 1
 # define YES 1
 # define NO 0
+# define PHILO_MAX 200
 
 typedef struct s_args
 {

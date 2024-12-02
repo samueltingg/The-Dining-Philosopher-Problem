@@ -6,7 +6,7 @@
 /*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 17:11:46 by sting             #+#    #+#             */
-/*   Updated: 2024/12/02 10:56:30 by sting            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:03:00 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ bool is_all_eat(t_program *program)
     t_philo *philo = program->philos;
     bool eaten;
 
+    if (program->args.num_times_to_eat == -1)
+        return (false);
     i = -1;
     while (++i < program->args.philo_count)
     {

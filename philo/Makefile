@@ -17,11 +17,12 @@ SRCDIR = src/
 
 SRCS_FIL = \
 			main.c \
-			utils.c \
-			libft.c \
-			routine.c \
+			arg_check.c \
 			init.c \
-			monitor.c
+			routine.c \
+			monitor.c \
+			libft.c \
+			utils.c
 
 SRCS = $(addprefix $(SRCDIR), $(SRCS_FIL))
 

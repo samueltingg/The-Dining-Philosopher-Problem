@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:23:12 by sting             #+#    #+#             */
-/*   Updated: 2024/12/02 11:51:50 by sting            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:55:38 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void	init_args(t_program *program, char **argv, int argc)
 	if (argc == 6)
 		program->args.num_times_to_eat = ft_atoi(argv[5]);
 	else
-		program->args.num_times_to_eat = -1; // ? necessary?
+		program->args.num_times_to_eat = -1;
 }
+
 // calloc array of forks(mutex)
 int	init_mutexes(t_program *program)
 {
@@ -53,13 +54,14 @@ void	init_philo_struct(t_program *program, int index)
 	philo->id = index + 1;
 	philo->program = program;
 	philo->l_fork = &program->forks[index];
-	if (index + 1 == program->args.philo_count) // if last element
+	if (index + 1 == program->args.philo_count)
 		philo->r_fork = &program->forks[0];
 	else
 		philo->r_fork = &program->forks[index + 1];
 	philo->last_meal = get_current_time();
 	philo->meal_count = 0;
 }
+// if (index + 1 == program->args.philo_count)  <--"if last element"
 
 // malloc philos array + init individual philo struct content
 int	init_philos(t_program *program)

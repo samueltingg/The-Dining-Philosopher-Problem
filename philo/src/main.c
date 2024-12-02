@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:59:13 by sting             #+#    #+#             */
-/*   Updated: 2024/12/02 11:26:33 by sting            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:51:33 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	check_valid_args(char **argv)
 	return (0);
 }
 
-void create_threads(t_program *program)
+void	create_threads(t_program *program)
 {
-	int i;
+	int	i;
 
 	program->do_flag = YES;
 	program->start_time = get_current_time();
@@ -64,11 +64,12 @@ void create_threads(t_program *program)
 	while (++i < program->args.philo_count)
 		pthread_create(&(program->philos[i].thread), NULL, philo_routine,
 			(void *)&program->philos[i]);
-	pthread_create(&program->monitor_thread, NULL, monitor_philos, (void *)program);
+	pthread_create(&program->monitor_thread, NULL, monitor_philos,
+		(void *)program);
 	pthread_mutex_unlock(&program->start_mutex);
 }
 
-void join_threads(t_program *program)
+void	join_threads(t_program *program)
 {
 	int	i;
 
@@ -78,9 +79,9 @@ void join_threads(t_program *program)
 	pthread_join(program->monitor_thread, NULL);
 }
 
-void destroy_mutexes(t_program *program)
+void	destroy_mutexes(t_program *program)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < program->args.philo_count)

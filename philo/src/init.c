@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 13:23:12 by sting             #+#    #+#             */
-/*   Updated: 2024/12/02 11:24:58 by sting            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:51:50 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void init_args(t_program *program, char **argv, int argc)
+void	init_args(t_program *program, char **argv, int argc)
 {
 	program->args.philo_count = ft_atoi(argv[1]);
 	program->args.time_to_die = ft_atoi(argv[2]);
@@ -26,9 +26,10 @@ void init_args(t_program *program, char **argv, int argc)
 // calloc array of forks(mutex)
 int	init_mutexes(t_program *program)
 {
-	int i;
+	int	i;
 
-	program->forks = ft_calloc(program->args.philo_count, sizeof(pthread_mutex_t));
+	program->forks = ft_calloc(program->args.philo_count,
+			sizeof(pthread_mutex_t));
 	if (!program->forks)
 	{
 		printf("Error: ft_callocc\n");
@@ -41,13 +42,12 @@ int	init_mutexes(t_program *program)
 	pthread_mutex_init(&program->do_flag_mutex, NULL);
 	pthread_mutex_init(&program->meal_mutex, NULL);
 	pthread_mutex_init(&program->start_mutex, NULL);
-
 	return (0);
 }
 
-void	init_philo_struct(t_program	*program, int index)
+void	init_philo_struct(t_program *program, int index)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = &program->philos[index];
 	philo->id = index + 1;
@@ -62,9 +62,9 @@ void	init_philo_struct(t_program	*program, int index)
 }
 
 // malloc philos array + init individual philo struct content
-int init_philos(t_program *program)
+int	init_philos(t_program *program)
 {
-	int i;
+	int	i;
 
 	program->philos = ft_calloc(program->args.philo_count, sizeof(t_philo));
 	if (!program->philos)

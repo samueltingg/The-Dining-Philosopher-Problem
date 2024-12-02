@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sting <sting@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sting <sting@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:45:17 by sting             #+#    #+#             */
-/*   Updated: 2024/12/02 11:24:06 by sting            ###   ########.fr       */
+/*   Updated: 2024/12/02 11:51:21 by sting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	ft_usleep(size_t milliseconds)
 	return (0);
 }
 
-void print_message(t_philo *philo, char *message)
+void	print_message(t_philo *philo, char *message)
 {
-	int timestamp;
+	int	timestamp;
 
 	pthread_mutex_lock(&philo->program->do_flag_mutex);
 	if (philo->program->do_flag == NO)
@@ -43,7 +43,6 @@ void print_message(t_philo *philo, char *message)
 		return ;
 	}
 	pthread_mutex_unlock(&philo->program->do_flag_mutex);
-
 	pthread_mutex_lock(&philo->program->print_mutex);
 	timestamp = get_current_time() - philo->program->start_time;
 	printf("%i %i %s\n", timestamp, philo->id, message);

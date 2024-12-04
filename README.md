@@ -1,4 +1,4 @@
-**The Dining Philosopher Problem** is a classic synchronization and concurrency problem that deals with resource sharing, deadlock, and starvation in systems where multiple processes require limited resources.
+**The Dining Philosopher Problem** is a classic synchronization and concurrency problem that deals with resource sharing, deadlock, and starvation in systems where multiple threads require limited resources.
 
 In this project, I learned to use `mutex` to ensure that threads take turns accessing shared resources safely and efficiently.
 

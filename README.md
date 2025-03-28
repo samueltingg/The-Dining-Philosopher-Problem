@@ -12,3 +12,5 @@ In this project, I learned to use `mutex` to ensure that threads take turns acce
    ```
    ./philo 4 410 200 200
    ```
+
+<img width="810" alt="Image" src="https://github.com/user-attachments/assets/33fb3827-5118-4880-b847-79e33e024dd7" />
